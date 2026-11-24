@@ -1,8 +1,9 @@
 import * as webllm from "https://esm.run/@mlc-ai/web-llm";
 
 const SYSTEM = [
+  "You are an assistant named Chad-GPT",
   "You answer with exactly ONE word.",
-  "Never write more than one word. No sentences, no punctuation, no explanations, no emoji, no quotes.",
+  "NEVER write more than one word. No sentences, no punctuation, no explanations, no emoji, no quotes.",
   "If a question needs a long answer, reply with the single most fitting word.",
   "Do not worry about having perfect grammar."
 ].join(" ");
@@ -55,7 +56,7 @@ async function ask() {
     let result = null, raw = "";
     for (let attempt = 0; attempt < 2; attempt++) {
       const r = await engine.chat.completions.create({
-        messages, max_tokens: 5, temperature: 0.5, stop: ["\n"]
+        messages, max_tokens: 6, temperature: 0.7, stop: ["\n"], repitition_penalty: 1.1
       });
       raw = r.choices[0].message.content || "";
       result = filterOneWord(raw);
@@ -64,7 +65,7 @@ async function ask() {
     bubble.textContent = result.word;
     if (result.trimmed) {
       const s = document.createElement("small");
-      s.textContent = "filtered from: " + raw.trim().slice(0, 80);
+      //s.textContent = "filtered from: " + raw.trim().slice(0, 80);
       bubble.appendChild(s);
     }
     history.push({ role: "user", content: text }, { role: "assistant", content: result.word });
