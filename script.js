@@ -21,7 +21,7 @@ const MODELS = [
   "Llama-3.2-1B-Instruct-q4f16_1-MLC"
 ];
 
-const MODEL = MODELS[2];
+const MODEL = MODELS[1];
 
 
 const WORD_RE = /[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/u;
